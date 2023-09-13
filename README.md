@@ -5,3 +5,31 @@ Welcome to the Number Guessing Game, a thrilling and interactive game that tests
 In this game, players are presented with a challenge to guess a specific number within a given range. They can input their guesses and receive feedback on whether their guess is too high or too low. The objective is to keep guessing until they find the right number within the allotted number of trials.
 
 The game offers a rewarding system that motivates players to continue playing. Upon successfully guessing the correct number, players will be rewarded with points. This encourages them to keep trying and improves their chances of finding the hidden number.
+
+## Table of Contents
+
+- [How to Compile](#how-to-compile)
+- [How to Run](#how-to-run)
+- [Image](#program-output)
+
+## How to compile
+
+```` shell
+    gcc guessGame.c main.c 
+````
+
+### you can pass the executables to a specied file with
+
+```` shell
+    gcc guessGame.c main.c -o <fileName>
+````
+
+### This will generate an executable in the current directory
+
+## How to run
+
+```` shell
+    ./a.out (or name of the executables that is generated)
+````
+
+## Program Output
