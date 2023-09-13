@@ -44,3 +44,7 @@ If you have questions, suggestions, or would like to collaborate, feel free to g
 - **Email**: <a.akanSWE@gmail.com>
 - **LinkedIn**: [akan-swe](https://www.linkedin.com/in/akan-swe)
 - **Twitter**: [@Hes_akan](https://twitter.com/Hes_akan)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
