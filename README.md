@@ -12,6 +12,7 @@ The game offers a rewarding system that motivates players to continue playing. U
 - [How to Run](#how-to-run)
 - [Image](#program-output)
 - [Contact Information](#contact-information)
+- [License](#license)
 
 ## How to compile
 
