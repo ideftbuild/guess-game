@@ -33,3 +33,6 @@ The game offers a rewarding system that motivates players to continue playing. U
 ````
 
 ## Program Output
+
+![image](https://github.com/akan-SWE/guess-game/assets/117040910/d06e5211-2e15-45c7-a6e8-cad65ddf22bf)
+
