@@ -42,5 +42,5 @@ The game offers a rewarding system that motivates players to continue playing. U
 If you have questions, suggestions, or would like to collaborate, feel free to get in touch with me:
 
 - **Email**: <a.akanSWE@gmail.com>
-- **LinkedIn**: [akan-swe](www.linkedin.com/in/akan-swe)
+- **LinkedIn**: [akan-swe](https://www.linkedin.com/in/akan-swe)
 - **Twitter**: [@Hes_akan](https://twitter.com/Hes_akan)
