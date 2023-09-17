@@ -36,7 +36,7 @@ The game offers a rewarding system that motivates players to continue playing. U
 
 ## Program Output
 
-![image](https://github.com/akan-SWE/guess-game/assets/117040910/d06e5211-2e15-45c7-a6e8-cad65ddf22bf)
+![image](https://github.com/akan-SWE/guess-game/assets/117040910/e8a2bc37-eb1b-43eb-a2ee-7b09a5a606c3)
 
 ## Contact Information
 
