@@ -173,7 +173,7 @@ int validateGuess(int guess, int *score, int answer)
 				case 'y':
 					return (1); /*return true to if*/
 				case 'n':
-					printf("Final Score -> %d, That was a good run", *score);
+					printf("Final Score -> %d, That was a good run\n", *score);
 					exit(0); /*exit don't return*/
 				default:
 					if (i != 3)
