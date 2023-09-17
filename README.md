@@ -8,9 +8,9 @@ The game offers a rewarding system that motivates players to continue playing. U
 
 ## Table of Contents
 
-- [How to Compile](#how-to-compile)
-- [How to Run](#how-to-run)
-- [Image](#program-output)
+- [How To Compile](#how-to-compile)
+- [How To Run](#how-to-run)
+- [Program Output](#program-output)
 - [Contact Information](#contact-information)
 - [License](#license)
 
