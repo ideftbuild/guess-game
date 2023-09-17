@@ -2,21 +2,23 @@
 
 /**
  * hint - hint for the user
+ * @answer: generated answer
  * Return: void (Nothing);
  */
-void hint(void)
+void hint(int answer)
 {
-	printf("\nThe number is between 1 - 100 and it an even number\n"
-		"but the first digit is an even number\n");
+	printf("last digit is : %d\n", answer % 10);
+	puts("-1 is not for hint anymore");
 }
 
 /**
- * answer - the answer for the guess game
+ * generate_answer - generates a random answer
  * Return: 68 as the answer
  */
-int answer(void)
+int generate_answer(void)
 {
-	return (ANSWER);
+	srand(time(NULL));
+	return (rand() % MAX + MIN);
 }
 
 /**
@@ -27,14 +29,8 @@ int getGuess(void)
 {
 	int guess;
 
-	printf("\nEnter your guess\n");
+	printf("\nEnter your guess\n:::: ");
 	scanf("%d", &guess);
-	/*calling the hint function*/
-	if (guess == HINT)
-	{
-		hint();
-		return (getGuess());
-	}
 	/*return the guess*/
 	return (guess);
 }
@@ -42,52 +38,62 @@ int getGuess(void)
 /**
  * checkingGuess - validate the user guess
  *
- * @round: keeps track of the rounds
  * @guessCount: the guess count
+ * @round: current round
+ * @score: current score
  *
  * Return: answer if user guesses right
  * otherwise 0 if guess count reaches limit
  */
-int checkingGuess(int guessCount, int round)
+void checkingGuess(int *guessCount, int round, int score)
 {
-	char choice;
-	int guess;
+	int guess, answer, hintCount, hintLimit;
 
-	guess = getGuess();
-	/*base case: guess should be in the range of -1 - 100*/
-	if (guess < MIN || guess > MAX)
-	{
-		printf("\nExiting........\nnot in range 1 - 100\n");
-		exit(1);
-	}
-	/*
-	* check if guess is equal to answer and call checkingGuess function,
-	* if the user want to move on to the next round.
-	*/
-	if (validateGuess(guess))
-	{
-		printf("round (%d)\n", round + 1);
-		guessCount = 1;
-		return (checkingGuess(guessCount, round + 1));
-	}
-	/*
-	 * check if guess is equal to limit
-	 * and call the checkingGuess function recursively if the user
-	 * wants to play again.
-	 */
-	if (guessIsEqualToLimit(guessCount))
-	{
-		guessCount = 1;
-		return (checkingGuess(guessCount, round));
-	}
-	 /*guess is greater or less, or equal to answer*/
-	if (guess >= answer())
-		printf("\n%d is greater than the answer, try again\n", guess);
-	else
-		printf("\n%d is lower than the answer, try again\n", guess);
-	/*current guess status*/
-	printf("%d out of %d guess\n", guessCount, GUESS_LIMIT);
-	return (checkingGuess(guessCount + 1, round));/*call, not case is met*/
+	hintCount = 0, hintLimit = 1;
+	answer = generate_answer();
+	do {
+		guess = getGuess();
+		/*user can only use 1 hint*/
+		if (guess == HINT && hintCount < hintLimit)
+		{
+			hintCount++, hint(answer);
+			continue;
+		}
+		else if (guess == HINT && hintCount == hintLimit)
+		{
+			hintCount++;
+			puts("haha no more hints, good luck");
+			continue;
+		}
+		/*guess should be in the range of -1 - 100*/
+		if (guess < MIN || guess > MAX)
+		{
+			printf("\nExiting........\nnot in range 1 - 100\n");
+			exit(1);
+		}
+		/*loop will only execute if the user want to play again*/
+		if (validateGuess(guess, &score, answer))
+		{
+			round++, *guessCount;
+			printf("round (%d)\n", round);
+			checkingGuess(guessCount, round, score);
+		}
+		/*loop will only execute if the user want to play again*/
+		if (guessIsEqualToLimit(*guessCount, &score))
+		{
+			printf("round (%d)\n", round);
+			*guessCount = 1;
+			continue;
+		}
+		 /*guess is greater or less, or equal to answer*/
+		if (guess >= answer)
+			printf("\n%d is greater than the answer, try again\n", guess);
+		else
+			printf("\n%d is lower than the answer, try again\n", guess);
+		/*current guess status*/
+		printf("%d out of %d guess\n", *guessCount, GUESS_LIMIT);
+		*guessCount += 1;
+	} while (guess != answer || *guessCount != GUESS_LIMIT);
 }
 
 /**
@@ -95,88 +101,93 @@ int checkingGuess(int guessCount, int round)
  * has reached it limit
  *
  * @guessCount: keeps count of the number of times the user has guessed
+ * @score: current score accumulated
  *
- * Return: 1, if the guess count is equal to guess limit
- * and user plays again, otherwise 0, and exit if user does not
+ * Return: 1, if the guess count is equal to guess limit and user plays again
+ * otherwise 0, and exit if user quits
  */
-int guessIsEqualToLimit(int guessCount)
+int guessIsEqualToLimit(int guessCount, int *score)
 {
 	char choice;
-
 	/*return, if the number of guesses reaches the limit*/
 	if (guessCount == GUESS_LIMIT)
 	{
-		printf("\n6 out of 6 guess\nOops!");
-		printf("\nguess has reached it limit");
+		printf("\n6 out of 6 guess\nOops!\n");
+		printf("guess has reached it limit\n");
 
 		printf("\nDo you want to play again (y or n)\n");
 		scanf(" %c", &choice);
+		/*incase the user capitalises the letter*/
+		choice = tolower(choice);
 
-		choice = tolower(choice);/*incase the user capitalises the letter*/
 		/*ask user if the want to play again, hence return 1 if true*/
 		switch (choice)
 		{
 			case 'y':
 				return (1);
 			case 'n':
-				printf("Thanks for playing,");
-				printf("You will pass this round very soon\n");
+				printf("Final Score: %d, You will pass this round very soon\n", *score);
 				exit(0); /*exit don't return*/
-				break;
 			default:
 				printf("\ninvalid choice,");
 				printf("please enter 'y' or 'n'");
-				guessIsEqualToLimit(guessCount);
-				exit(0);
-				break;
+				guessIsEqualToLimit(guessCount, score);
+				exit(0); /*exit don't return*/
 		}
 	}
 	else
-		return (0); /*return 0, if false*/
+		return (0); /*false*/
 }
 
 /**
  * validateGuess - validates guess from the user
  *
  * @guess: the guess from the user
+ * @score: the total score accumulated
+ * @answer: the random generated answer
  *
  * Return: 1 if the user guessed it right, otherwise 0.
  * exit if the user
  */
-int validateGuess(int guess)
+int validateGuess(int guess, int *score, int answer)
 {
 	char choice;
+	int i;
 
+	i = 0;
 	/*return, if the user guessed it right*/
-	if (guess == answer())
+	if (guess == answer)
 	{
-		printf("\t\tHey!, congratulations!!!🎉🥳\n"
-		"\t\tyou have guessed the right number %d🎉🥳\n", guess);
+		printf("\n\t\tHey!, congratulations!!!🎉🥳\n"
+		"\t\tyou have guessed the right number %d🚀\n", guess);
+		*score += 50;
+		printf("\n\t\tScore---> %d <---Score\n\n", *score);
 
-		printf("Do you want to play another round (y or n)\n");
-		scanf(" %c", &choice);
-		/*
-		 * ask user if they want to play another round
-		 * hence return 1 if true
-		 */
+		do {
+			printf("Do you want to play another round (y or n)\n");
+			scanf(" %c", &choice);
 
-		choice = tolower(choice);/*incase the user capitalises the letter*/
-		switch (choice)
-		{
-			case 'y':
-				return (1);
-			case 'n':
-				puts("That was a good run, Thanks for playing");
-				exit(0); /*exit don't return*/
-				break;
-			default:
-				puts("\ninvalid choice, please enter 'y' or 'n'");
-				validateGuess(guess);
-				exit(0);
-				break;
-		}
+			choice = tolower(choice);/*incase the user capitalises the letter*/
+			switch (choice)
+			{
+				case 'y':
+					return (1); /*return true to if*/
+				case 'n':
+					printf("Final Score -> %d, That was a good run", *score);
+					exit(0); /*exit don't return*/
+				default:
+					if (i != 3)
+					puts("\ninvalid choice, please enter 'y' or 'n'");
+			}
+		i++;
+		} while (i <= 3);
+
+		/*did not match 3 times, exit the program*/
+		puts("Exiting......");
+		exit(1);
+
 	}
 	else
-		return (0); /*return if false*/
+		return (0); /*false*/
 }
 
