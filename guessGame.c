@@ -71,14 +71,14 @@ void checkingGuess(int *guessCount, int round, int score)
 			printf("\nExiting........\nnot in range 1 - 100\n");
 			exit(1);
 		}
-		/*loop will only execute if the user want to play again*/
+		/*this statement will only execute if the user want to play again*/
 		if (validateGuess(guess, &score, answer))
 		{
 			round++, *guessCount;
 			printf("round (%d)\n", round);
 			checkingGuess(guessCount, round, score);
 		}
-		/*loop will only execute if the user want to play again*/
+		/*this statement will only execute if the user want to play again*/
 		if (guessIsEqualToLimit(*guessCount, &score))
 		{
 			printf("round (%d)\n", round);
